@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "serverless offline --stage dev"
+    "dev": "nodemon --exec \"serverless offline --stage dev\"",
+    "deploy": "serverless deploy --stage prod --region eu-central-1",
+    "remove": "serverless remove --stage prod --region eu-central-1"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.9.1",
@@ -13,6 +15,7 @@
   },
   "devDependencies": {
     "drizzle-kit": "^0.20.17",
+    "nodemon": "^3.1.0",
     "serverless-dotenv-plugin": "^6.0.0",
     "serverless-offline": "^13.4.0"
   }
