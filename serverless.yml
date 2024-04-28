@@ -6,8 +6,20 @@ provider:
     name: aws
     runtime: nodejs20.x
     environment:
-        DEBUG: { $env:DEBUG, 0 }
-        DATABASE_URL: { $env:DATABASE_URL }
+        DEBUG: ${env:DEBUG, 0}
+        DATABASE_URL: ${env:DATABASE_URL}
+    iam:
+        role:
+            name: serverless-ssm-role
+            statements:
+                - Effect: "Allow"
+                  Resource: "*"
+                  Action:
+                      - "ssm:GetParameter"
+                      - "ssm:GetParameters"
+                      - "ssm:GetParametersByPath"
+                      - "ssm:GetParameterHistory"
+                      - "ssm:DescribeParameters"
 
 functions:
     api:
@@ -16,12 +28,12 @@ functions:
             - httpApi: "*"
 
 custom:
-  dotenv:
-    exclude:
-        - AWS_ACCESS_KEY_ID
-        - AWS_SECRET_ACCESS_KEY
-        - AWS_SESSION_TOKEN
-        - DATABASE_URL
+    dotenv:
+        exclude:
+            - AWS_ACCESS_KEY_ID
+            - AWS_SECRET_ACCESS_KEY
+            - AWS_SESSION_TOKEN
+            - DATABASE_URL
 
 plugins:
     - serverless-offline
